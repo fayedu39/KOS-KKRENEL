@@ -2,10 +2,25 @@
 ; Le but du machin est de passer en PM32bits et de charger le KKrenel
 
 [bits 16]
-[org 0x7c00]
+[ORG 0x0]
 
+; initialisation des segments en 0x07C00
+mov ax, 0x07C0
+mov ds, ax
+mov es, ax
+
+mov cx,15 ; On va afficher 15 fois le message comme un porc
+
+DebutBoucleMessage:
+JCXZ FinBoucleMessage ; Si la boucle est finie, on jump juste après
+
+DEC cx ; Décrémentation de CX
 MOV SI, AyleauString ; Store pointer to hello world string in SI 
 CALL PrintString ; Print the string 
+JMP DebutBoucleMessage ; Nouvelle itération de la boucle
+
+FinBoucleMessage:
+
 HLT ; Stop the processor 
 
 PrintString: ; Print a string to screen 
